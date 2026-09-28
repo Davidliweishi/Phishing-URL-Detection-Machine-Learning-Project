@@ -81,9 +81,9 @@ Requirements: Python 3 with `pandas`, `numpy`, `matplotlib`, `scikit-learn`.
 
 - `extract_domains.py` - parses a URL into scheme/hostname/path/subdomain/IP-host pieces
 
-- `lexical_features.py` - computes the 23 features in `url_features.csv` from those parsed pieces
+- `lexical_features.py` - processes the 23 features in `url_features.csv` from those parsed pieces
 
-- `main.py` - loads the 3 cleaned sources, unifies their schema, dedupes within/across sources, runs feature extraction, saves `dataset/processed/url_features.csv`
+- `main.py` - loads the 3 cleaned sources, combines their schema, dedupes within/across sources, runs feature extraction, saves `dataset/processed/url_features.csv`
 - `sanity_baseline.py` - trains a baseline classifier and runs 3 diagnostics: label prediction, source-leakage check, held-out-source split
 - `cluster_analysis.py` - unsupervised KMeans clustering within the malicious class only, to find structure not already in the label
 - `test_extract_domains.py` - unit tests for `extract_domains.py`'s awkward cases (IPv6, malformed ports, multi-label suffixes, etc.)
