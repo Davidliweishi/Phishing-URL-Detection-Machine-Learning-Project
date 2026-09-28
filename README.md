@@ -2,19 +2,19 @@
 
 Sid321axn (2021) Malicious URLs dataset [Dataset]. Kaggle. Available at:
 https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset
-(Accessed: 25 September 2026).
+
 
 Siddharthkumar25 (2019) Malicious and benign URLs [Dataset]. Kaggle. Available at:
 https://www.kaggle.com/datasets/siddharthkumar25/malicious-and-benign-urls
-(Accessed: 25 September 2026).
+
 
 Prasad, A. and Chandra, S. (2024) PhiUSIIL phishing URL (website) [Dataset].
 UCI Machine Learning Repository. Available at: https://doi.org/10.1016/j.cose.2023.103545
-(Accessed: 25 September 2026).
+
 
 Mohammad, R.M. and McCluskey, L. (2015) Phishing Websites Dataset [Dataset].
 UCI Machine Learning Repository. Available at: https://archive.ics.uci.edu/dataset/327
-(Accessed: 25 September 2026). Used as a feature-design reference only (see Feature
+. Used as a feature-design reference only (see Feature
 Justification) - it ships pre-computed feature values with no raw URL column, so it is
 not merged into `url_features.csv`.
 
