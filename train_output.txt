@@ -1,0 +1,303 @@
+loaded 1315241 rows, 22 features, 31.5% malicious
+
+########## Random split: 1052192 train / 263049 test ##########
+
+Logistic Regression trained in 1.3s
+
+--- Logistic Regression ---
+              precision    recall  f1-score   support
+
+           0      0.789     0.746     0.767    180124
+           1      0.507     0.567     0.535     82925
+
+    accuracy                          0.690    263049
+   macro avg      0.648     0.656     0.651    263049
+weighted avg      0.700     0.690     0.694    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[134417  45707]
+ [ 35931  46994]]
+
+Random Forest trained in 26.6s
+
+--- Random Forest ---
+              precision    recall  f1-score   support
+
+           0      0.902     0.862     0.882    180124
+           1      0.726     0.797     0.760     82925
+
+    accuracy                          0.841    263049
+   macro avg      0.814     0.829     0.821    263049
+weighted avg      0.847     0.841     0.843    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[155214  24910]
+ [ 16810  66115]]
+
+XGBoost trained in 3.7s
+
+--- XGBoost ---
+              precision    recall  f1-score   support
+
+           0      0.886     0.819     0.851    180124
+           1      0.662     0.772     0.713     82925
+
+    accuracy                          0.804    263049
+   macro avg      0.774     0.795     0.782    263049
+weighted avg      0.816     0.804     0.807    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[147452  32672]
+ [ 18928  63997]]
+
+LightGBM trained in 8.2s
+
+--- LightGBM ---
+              precision    recall  f1-score   support
+
+           0      0.895     0.827     0.860    180124
+           1      0.678     0.788     0.729     82925
+
+    accuracy                          0.815    263049
+   macro avg      0.786     0.808     0.794    263049
+weighted avg      0.826     0.815     0.818    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[149039  31085]
+ [ 17567  65358]]
+
+=== Random split summary ===
+                     accuracy  precision_mal  recall_mal  f1_mal  roc_auc  pr_auc  train_seconds
+model                                                                                           
+Logistic Regression     0.690          0.507       0.567   0.535    0.733   0.578          1.250
+Random Forest           0.841          0.726       0.797   0.760    0.919   0.865         26.619
+XGBoost                 0.804          0.662       0.772   0.713    0.886   0.813          3.713
+LightGBM                0.815          0.678       0.788   0.729    0.899   0.832          8.169
+
+########## Held out: phish_corpus (681009 train / 634232 test) ##########
+
+--- Logistic Regression | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.700     0.660     0.679    422092
+           1      0.392     0.436     0.413    212140
+
+    accuracy                          0.585    634232
+   macro avg      0.546     0.548     0.546    634232
+weighted avg      0.597     0.585     0.590    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[278565 143527]
+ [119653  92487]]
+
+--- Random Forest | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.742     0.807     0.773    422092
+           1      0.535     0.442     0.484    212140
+
+    accuracy                          0.685    634232
+   macro avg      0.639     0.625     0.629    634232
+weighted avg      0.673     0.685     0.677    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[340509  81583]
+ [118285  93855]]
+
+--- XGBoost | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.732     0.787     0.759    422092
+           1      0.502     0.426     0.461    212140
+
+    accuracy                          0.667    634232
+   macro avg      0.617     0.607     0.610    634232
+weighted avg      0.655     0.667     0.659    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[332393  89699]
+ [121746  90394]]
+
+--- LightGBM | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.738     0.785     0.761    422092
+           1      0.511     0.447     0.477    212140
+
+    accuracy                          0.672    634232
+   macro avg      0.625     0.616     0.619    634232
+weighted avg      0.662     0.672     0.666    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[331432  90660]
+ [117396  94744]]
+
+########## Held out: phiusiil (1080743 train / 234498 test) ##########
+
+--- Logistic Regression | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.618     0.861     0.719    134849
+           1      0.597     0.279     0.380     99649
+
+    accuracy                          0.614    234498
+   macro avg      0.608     0.570     0.550    234498
+weighted avg      0.609     0.614     0.575    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[116137  18712]
+ [ 71884  27765]]
+
+--- Random Forest | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.065     0.011     0.018    134849
+           1      0.371     0.789     0.504     99649
+
+    accuracy                          0.341    234498
+   macro avg      0.218     0.400     0.261    234498
+weighted avg      0.195     0.341     0.225    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[  1454 133395]
+ [ 21044  78605]]
+
+--- XGBoost | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.135     0.028     0.046    134849
+           1      0.366     0.760     0.494     99649
+
+    accuracy                          0.339    234498
+   macro avg      0.251     0.394     0.270    234498
+weighted avg      0.233     0.339     0.236    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[  3749 131100]
+ [ 23947  75702]]
+
+--- LightGBM | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.055     0.009     0.016    134849
+           1      0.370     0.787     0.503     99649
+
+    accuracy                          0.340    234498
+   macro avg      0.212     0.398     0.259    234498
+weighted avg      0.189     0.340     0.223    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[  1229 133620]
+ [ 21220  78429]]
+
+########## Held out: urldata (868730 train / 446511 test) ##########
+
+--- Logistic Regression | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.823     0.747     0.783    343675
+           1      0.353     0.461     0.400    102836
+
+    accuracy                          0.681    446511
+   macro avg      0.588     0.604     0.592    446511
+weighted avg      0.714     0.681     0.695    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[256854  86821]
+ [ 55429  47407]]
+
+--- Random Forest | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.885     0.874     0.880    343675
+           1      0.597     0.621     0.609    102836
+
+    accuracy                          0.816    446511
+   macro avg      0.741     0.748     0.744    446511
+weighted avg      0.819     0.816     0.817    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[300489  43186]
+ [ 38926  63910]]
+
+--- XGBoost | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.895     0.770     0.828    343675
+           1      0.476     0.699     0.566    102836
+
+    accuracy                          0.754    446511
+   macro avg      0.686     0.734     0.697    446511
+weighted avg      0.799     0.754     0.768    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[264683  78992]
+ [ 30988  71848]]
+
+--- LightGBM | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.894     0.824     0.857    343675
+           1      0.534     0.674     0.595    102836
+
+    accuracy                          0.789    446511
+   macro avg      0.714     0.749     0.726    446511
+weighted avg      0.811     0.789     0.797    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[283107  60568]
+ [ 33566  69270]]
+
+=== Held-out-source summary ===
+                                  accuracy  precision_mal  recall_mal  f1_mal  roc_auc  pr_auc
+held_out     model                                                                            
+phish_corpus Logistic Regression     0.585          0.392       0.436   0.413    0.585   0.444
+             Random Forest           0.685          0.535       0.442   0.484    0.722   0.539
+             XGBoost                 0.667          0.502       0.426   0.461    0.677   0.504
+             LightGBM                0.672          0.511       0.447   0.477    0.690   0.515
+phiusiil     Logistic Regression     0.614          0.597       0.279   0.380    0.497   0.531
+             Random Forest           0.341          0.371       0.789   0.504    0.242   0.313
+             XGBoost                 0.339          0.366       0.760   0.494    0.284   0.338
+             LightGBM                0.340          0.370       0.787   0.503    0.279   0.332
+urldata      Logistic Regression     0.681          0.353       0.461   0.400    0.677   0.411
+             Random Forest           0.816          0.597       0.621   0.609    0.877   0.653
+             XGBoost                 0.754          0.476       0.699   0.566    0.828   0.597
+             LightGBM                0.789          0.534       0.674   0.595    0.847   0.624
+
+########## Error analysis ##########
+false positives (benign flagged malicious): 24910
+false negatives (malicious missed): 16810
+
+error rate by source:
+source
+phish_corpus    0.163
+phiusiil        0.203
+urldata         0.129
+
+--- 10 random false positives ---
+                                                                                                                                                          url       source    subtype  true  pred  prob_malicious
+                                                                                                                       metalsupermarkets.com/catalog/ALUMINUM phish_corpus     benign     0     1           0.522
+www.happyrockcenter.com/components/login/cgi-bin/webscrcmd=_login-submit&dispatch=5885d80a13c0db1f8e263663d3faee8d0288a7fd2903afb85a5540fd44243d03/index.html phish_corpus     benign     0     1           0.560
+                                                                                                                    https://www.familymediationcouncil.org.uk     phiusiil legitimate     0     1           0.521
+                                                                                                    'institutocgr.com/web/tmp/dk-/Sikker\%20nettbetaling.htm' phish_corpus     benign     0     1           0.532
+                                                                                                                                     veoox.com/tags/braz.html phish_corpus     benign     0     1           0.709
+                                                                                                                   https://www.molenda.us/photos/ioah/byname/      urldata     benign     0     1           0.682
+                                                                                                                      https://www.powdermetal.com/secoper.htm      urldata     benign     0     1           0.535
+                                                                                                                       https://www.artsfaculty.auckland.ac.nz     phiusiil legitimate     0     1           0.673
+                                                                                                                              https://www.actorsmn.org/findus      urldata     benign     0     1           0.614
+                                                                                                                                blainewa.htu.myareaguide.com/ phish_corpus     benign     0     1           0.636
+
+--- 10 random false negatives ---
+                                                              url       source   subtype  true  pred  prob_malicious
+                                      http://www.annafalkenau.com     phiusiil  phishing     1     0           0.378
+                                 https://ufhfjhdf.weeblysite.com/     phiusiil  phishing     1     0           0.465
+                                     http://newcz.net.tripod.com/      urldata malicious     1     0           0.368
+                                            http://www.ynlrhd.com     phiusiil  phishing     1     0           0.411
+                                            http://bezproudoff.cz      urldata malicious     1     0           0.398
+                       https://yahoomailteamnewupdate.boxmode.io/     phiusiil  phishing     1     0           0.434
+                                        https://sneakersytanie.pl phish_corpus  phishing     1     0           0.384
+http://springparktechnologies.com/document/cloud-storage/rob.html      urldata malicious     1     0           0.401
+                                        http://www.sensimatino.us     phiusiil  phishing     1     0           0.410
+                             gnosis.cx/publish/tech_index_cp.html phish_corpus  phishing     1     0           0.201
+
+saved final model -> models/final_model.joblib (114.7 MB)
