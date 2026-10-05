@@ -1,0 +1,130 @@
+############ Label baseline ############
+=== Overall ===
+              precision    recall  f1-score   support
+
+           0       0.89      0.83      0.86    180453
+           1       0.67      0.78      0.72     83014
+
+    accuracy                           0.81    263467
+   macro avg       0.78      0.80      0.79    263467
+weighted avg       0.82      0.81      0.81    263467
+
+[[149125  31328]
+ [ 18573  64441]]
+
+=== phish_corpus (n=127205) ===
+              precision    recall  f1-score   support
+
+           0       0.84      0.64      0.73     84779
+           1       0.51      0.75      0.61     42426
+
+    accuracy                           0.68    127205
+   macro avg       0.67      0.70      0.67    127205
+weighted avg       0.73      0.68      0.69    127205
+
+
+=== phiusiil (n=47010) ===
+              precision    recall  f1-score   support
+
+           0       0.81      1.00      0.89     26990
+           1       1.00      0.67      0.80     20020
+
+    accuracy                           0.86     47010
+   macro avg       0.90      0.84      0.85     47010
+weighted avg       0.89      0.86      0.85     47010
+
+
+=== urldata (n=89252) ===
+              precision    recall  f1-score   support
+
+           0       0.98      0.98      0.98     68684
+           1       0.95      0.93      0.94     20568
+
+    accuracy                           0.97     89252
+   macro avg       0.96      0.96      0.96     89252
+weighted avg       0.97      0.97      0.97     89252
+
+
+
+############ Source leakage check ############
+majority-class baseline accuracy: 0.483
+model accuracy: 0.837
+              precision    recall  f1-score   support
+
+phish_corpus       0.90      0.90      0.90    127202
+    phiusiil       0.70      0.90      0.79     46927
+     urldata       0.84      0.72      0.78     89338
+
+    accuracy                           0.84    263467
+   macro avg       0.81      0.84      0.82    263467
+weighted avg       0.84      0.84      0.84    263467
+
+confusion matrix (rows=true source, cols=predicted source):
+              phish_corpus  phiusiil  urldata
+phish_corpus        113865      4022     9315
+phiusiil              1889     42145     2893
+urldata              11074     13867    64397
+
+top |coefficient| features per source (what the model leans on to tell sources apart):
+  phish_corpus: has_https, special_char_ratio, num_special_chars, url_length, num_hyphens
+  phiusiil: num_slashes, num_hyphens, url_length, has_https, special_char_ratio
+  urldata: num_slashes, has_https, longest_char_run, subdomain_hyphen_count, special_char_ratio
+
+
+############ Held-out-source split ############
+
+=== held out: phish_corpus (trained on the other two sources only, n_test=636008) ===
+              precision    recall  f1-score   support
+
+           0       0.37      0.00      0.00    423736
+           1       0.33      0.99      0.50    212272
+
+    accuracy                           0.33    636008
+   macro avg       0.35      0.50      0.25    636008
+weighted avg       0.36      0.33      0.17    636008
+
+  false positives (benign predicted malicious): 423017
+    'twitter.com/Dezile'  [url_length=18, num_hyphens=0]
+    'bishop-accountability.org/news3/2006_04_02_TraverseCityRecordEagle_ReverendPatrick_Patrick_Barrett_1.htm'  [url_length=104, num_hyphens=1]
+    'tractors.wikia.com/wiki/Mercury_Villager'  [url_length=40, num_hyphens=0]
+  false negatives (malicious predicted benign): 1221
+    'https://firebasestorage.googleapis.com/v0/b/block83333h3hchain.appspot.com/o/login.html?alt=media&token=c330966f-4787-44c2-93ea-ff097d2d7204'  [url_length=140, num_hyphens=4]
+    'https://laurajayedesigns.com/wp-admin/includes/acesss/wells/'  [url_length=60, num_hyphens=1]
+    'https://www.splash-laundromatlv.com/wp-admin/includes/access/west/WellsFargo/WellsFargo/wells/'  [url_length=94, num_hyphens=2]
+
+=== held out: phiusiil (trained on the other two sources only, n_test=234635) ===
+              precision    recall  f1-score   support
+
+           0       0.74      1.00      0.85    134849
+           1       1.00      0.52      0.69     99786
+
+    accuracy                           0.80    234635
+   macro avg       0.87      0.76      0.77    234635
+weighted avg       0.85      0.80      0.78    234635
+
+  false positives (benign predicted malicious): 2
+    'https://www.booooooom.com'  [url_length=25, num_hyphens=0]
+    'https://www.ssssssss.org'  [url_length=24, num_hyphens=0]
+  false negatives (malicious predicted benign): 47671
+    'https://steamscommuniity.ru/'  [url_length=28, num_hyphens=0]
+    'https://yhfdhydrr.top/'  [url_length=22, num_hyphens=0]
+    'https://maildinshaakckjnw468.firebaseapp.com/'  [url_length=45, num_hyphens=0]
+
+=== held out: urldata (trained on the other two sources only, n_test=446688) ===
+              precision    recall  f1-score   support
+
+           0       0.93      0.48      0.63    343677
+           1       0.34      0.88      0.49    103011
+
+    accuracy                           0.57    446688
+   macro avg       0.64      0.68      0.56    446688
+weighted avg       0.80      0.57      0.60    446688
+
+  false positives (benign predicted malicious): 178620
+    'https://www.maxalbums.com/index.php?artist=Unwritten+Law&album=Elva'  [url_length=67, num_hyphens=0]
+    'https://www.youtube.com/watch?v=G4aLir2Gp8s'  [url_length=43, num_hyphens=0]
+    'https://www.wedluxe.com/'  [url_length=24, num_hyphens=0]
+  false negatives (malicious predicted benign): 11898
+    'http://d3uc0zpywezmsh.cloudfront.net/b_zq_ym_hotvideo002/hotvideo_0813.apk'  [url_length=74, num_hyphens=0]
+    'http://down-fasterfile24.com'  [url_length=28, num_hyphens=1]
+    'https://sites.google.com/site/sitesscalimeventlogs00/'  [url_length=53, num_hyphens=0]
