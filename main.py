@@ -110,6 +110,13 @@ def build_merged_dataset() -> pd.DataFrame:
         "urldata": load_urldata(),
     }
     for name, df in sources.items():
+        # Some scraped URLs contain the HTML-escaped "&amp;" instead of "&",
+        # which inflates special-character counts. Replace only that exact
+        # string (html.unescape would also corrupt e.g. "&param=" into "¶m=").
+        amp_count = df["url"].str.contains("&amp;", regex=False, na=False).sum()
+        # Collapse any escaping ("&amp;", etc) to a single "&"
+        df["url"] = df["url"].str.replace(r"&(?:amp)+", "&", regex=True)
+        print(f"  {name}: {amp_count} URL(s) with '&amp;' decoded to '&'")
         df["normalised_url"] = df["url"].apply(_normalise_url)
         unparseable = df["normalised_url"].isna()
         if unparseable.any():
