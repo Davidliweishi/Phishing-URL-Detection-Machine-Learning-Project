@@ -1,118 +1,59 @@
-clustering 415069 malicious rows on 22 features (label not used as input)
+clustering 414625 malicious rows on 22 features (label not used as input)
 
 silhouette scores by k:
-  k=2: silhouette=0.527
-  k=3: silhouette=0.344
-  k=4: silhouette=0.346
-  k=5: silhouette=0.346
-  k=6: silhouette=0.288
-  k=7: silhouette=0.350
-  k=8: silhouette=0.243
+  k=2: silhouette=0.575
+  k=3: silhouette=0.342
+  k=4: silhouette=0.344
+  k=5: silhouette=0.342
+  k=6: silhouette=0.342
+  k=7: silhouette=0.360
+  k=8: silhouette=0.303
   -> chose k=2 (highest silhouette score)
   -> overriding to k=7 (set on the command line)
 
-=== Cluster 0 (n=299669, 72.2% of malicious rows) ===
+=== Cluster 0 (n=298093, 71.9% of malicious rows) ===
 subtype composition:
 subtype
-phishing      0.540
+phishing      0.542
 malicious     0.268
-defacement    0.159
+defacement    0.158
 malware       0.032
 source composition:
 source
-phish_corpus    0.470
+phish_corpus    0.469
 urldata         0.268
-phiusiil        0.262
+phiusiil        0.263
 top differentiating features (cluster mean vs overall malicious-subset mean):
-  num_special_chars: cluster=7.246  overall=9.899  (z=-0.36)
-  num_query_params: cluster=0.107  overall=0.716  (z=-0.35)
-  url_length: cluster=42.935  overall=59.914  (z=-0.31)
+  num_special_chars: cluster=7.209  overall=9.807  (z=-0.36)
+  num_query_params: cluster=0.103  overall=0.712  (z=-0.35)
+  url_length: cluster=42.722  overall=59.725  (z=-0.32)
 example URLs:
-  http://account.buscaunamascota.interactivos123.com/conexion/God/upgrade/newp/ii.php?fid=4
-  http://www.amadolondon.co.uk/net/mail.163.com/
-  www.rowancountync.gov/GOVERNMENT/Departments/PublicLibrary/HistoryRoom/TheoBuerbaumsSalisbury/CottonMills/tabid/460/Default.aspx
+  http://www.terrassentrend.de/includes/js/adeb/adobe.php
+  http://one.hgufkjyvu.biz/4mex3cncek\n
+  http://www.scandia-rasvereniging.nl/evenementen/routebeschrijving-epe.html
 
-=== Cluster 1 (n=315, 0.1% of malicious rows) ===
+=== Cluster 1 (n=75233, 18.1% of malicious rows) ===
 subtype composition:
 subtype
-phishing     0.683
-malicious    0.292
-malware      0.025
+defacement    0.634
+malicious     0.209
+phishing      0.134
+malware       0.023
 source composition:
 source
-phiusiil        0.425
-urldata         0.292
-phish_corpus    0.283
+phish_corpus    0.741
+urldata         0.209
+phiusiil        0.049
 top differentiating features (cluster mean vs overall malicious-subset mean):
-  has_punycode_label: cluster=1.000  overall=0.001  (z=+34.93)
-  has_non_ascii: cluster=1.000  overall=0.001  (z=+34.93)
-  num_hyphens: cluster=3.870  overall=0.818  (z=+1.55)
+  num_query_params: cluster=3.462  overall=0.712  (z=+1.59)
+  num_special_chars: cluster=20.086  overall=9.807  (z=+1.44)
+  url_length: cluster=129.777  overall=59.725  (z=+1.30)
 example URLs:
-  https://xn--boredapeyachtcub-ywc.com/
-  http://www.xn--9-07t6apfh0ff9bxc9vm167e3oxb.xbmgd.com
-  https://xn--3ca.fr/N3g=
+  http://9779.info/%E6%A0%91%E5%8F%B6%E8%B4%B4%E7%94%BB%E4%BD%9C%E5%93%81%E4%BA%BA%E7%89%A9/
+  https://notariuszplonsk.pl/authorize.php?9afa0g3hd4adpgsgdqpdqqzzygtroxjis5tml6zqxb1sbrw67fdud4sslz39v0tefgjwuonrkp1wnbl0fj1snv0venkm0fpeuh6qe6ka9fvqbwbic50tdygcwsotlhmn3fayid3svt3cwxuygvhn4awjduc1sgmtsa0st2dcgqhhwistxle71w0tontwjiafgklg7xbbawrtzzzgkwih8w85x79q4fhphs0m9iqex61qpgfs8idlpx2furfctlk5
+  http://mueblesjulianjimenez.es/index.php?page=shop.cart&option=com_virtuemart&Itemid=6
 
-=== Cluster 2 (n=16310, 3.9% of malicious rows) ===
-subtype composition:
-subtype
-malware      0.722
-malicious    0.248
-phishing     0.030
-source composition:
-source
-phish_corpus    0.740
-urldata         0.248
-phiusiil        0.011
-top differentiating features (cluster mean vs overall malicious-subset mean):
-  has_ip_host: cluster=0.988  overall=0.040  (z=+4.83)
-  letter_ratio: cluster=0.352  overall=0.753  (z=-3.26)
-  digit_ratio: cluster=0.391  overall=0.071  (z=+2.95)
-example URLs:
-  http://45.95.168.210/sparc
-  http://182.116.215.104:60581/Mozi.m
-  http://37.49.226.178/deusbins/deus.arm6
-
-=== Cluster 3 (n=74936, 18.1% of malicious rows) ===
-subtype composition:
-subtype
-defacement    0.628
-malicious     0.210
-phishing      0.137
-malware       0.026
-source composition:
-source
-phish_corpus    0.739
-urldata         0.210
-phiusiil        0.052
-top differentiating features (cluster mean vs overall malicious-subset mean):
-  num_query_params: cluster=3.502  overall=0.716  (z=+1.60)
-  num_special_chars: cluster=20.630  overall=9.899  (z=+1.45)
-  url_length: cluster=131.011  overall=59.914  (z=+1.31)
-example URLs:
-  http://www.xzguoyuan.com/js/?http://us.battle.net/login/en/?ref=http%3A%2F%2Fus.battle.net%2Fd3%2Fen%2Findex&;app=com-d3
-  http://supergorod.ru/index.php/2011-03-12-19-49-12/24-sms-?tmpl=component&print=1&layout=default&page=
-  http://pembrokeshire-farm-cottages.co.uk/component/option,com_rentalotplus/Itemid,11/call_type,1/controller,enquiry/currency,GBP/datefrom,2011-01-08/dateto,2011-01-15/task,display/unit_id,1/index.html
-
-=== Cluster 4 (n=1108, 0.3% of malicious rows) ===
-subtype composition:
-subtype
-phishing     0.541
-malicious    0.459
-source composition:
-source
-urldata         0.459
-phiusiil        0.435
-phish_corpus    0.106
-top differentiating features (cluster mean vs overall malicious-subset mean):
-  is_shortened: cluster=1.000  overall=0.003  (z=+19.33)
-  hostname_length: cluster=6.810  overall=19.929  (z=-1.35)
-  num_dots: cluster=1.054  overall=2.582  (z=-1.05)
-example URLs:
-  https://tinyurl.com/bpa6b6jp
-  http://tinyurl.com/Development-margin/
-  https://tinyurl.com/4z4sfrm3
-
-=== Cluster 5 (n=22706, 5.5% of malicious rows) ===
+=== Cluster 2 (n=22706, 5.5% of malicious rows) ===
 subtype composition:
 subtype
 phishing      0.892
@@ -125,29 +66,91 @@ phiusiil        0.732
 phish_corpus    0.170
 urldata         0.098
 top differentiating features (cluster mean vs overall malicious-subset mean):
-  subdomain_hyphen_count: cluster=1.907  overall=0.144  (z=+2.92)
-  hostname_length: cluster=45.151  overall=19.929  (z=+2.60)
-  subdomain_depth: cluster=2.370  overall=0.776  (z=+1.88)
+  subdomain_hyphen_count: cluster=1.907  overall=0.143  (z=+2.92)
+  hostname_length: cluster=45.194  overall=19.922  (z=+2.60)
+  subdomain_depth: cluster=2.373  overall=0.775  (z=+1.89)
 example URLs:
-  https://tiny-shadow-bf34.glro9t32e7.workers.dev/
-  http://www.amazceczm-co-jp.amazaeocn.chadingwei.top/
-  http://sefty-pages-inc.fulba.com/index.htm
+  http://www.saisesn-co-jp.aescnse.fczquz.top/jp.php
+  https://ahead-trusting-waterfall.glitch.me/
+  http://secure.square.logindqxz.usa.cc/account/app/svc/login.html...
 
-=== Cluster 6 (n=25, 0.0% of malicious rows) ===
+=== Cluster 3 (n=6439, 1.6% of malicious rows) ===
 subtype composition:
 subtype
-phishing     0.72
-malicious    0.28
+malware       0.764
+malicious     0.224
+phishing      0.012
+defacement    0.000
 source composition:
 source
-phiusiil        0.60
-urldata         0.28
-phish_corpus    0.12
+phish_corpus    0.773
+urldata         0.224
+phiusiil        0.003
 top differentiating features (cluster mean vs overall malicious-subset mean):
-  has_mixed_script: cluster=1.000  overall=0.000  (z=+128.85)
-  has_non_ascii: cluster=1.000  overall=0.001  (z=+34.93)
-  has_punycode_label: cluster=1.000  overall=0.001  (z=+34.93)
+  has_explicit_port: cluster=1.000  overall=0.016  (z=+7.91)
+  has_ip_host: cluster=0.933  overall=0.040  (z=+4.55)
+  letter_ratio: cluster=0.283  overall=0.753  (z=-3.83)
 example URLs:
-  http://www.xn----7sbabof2ac4chjkhgcg5e1i.xn--p1ai
-  http://www.xn----htbybfcxh3h.xn--p1ai
-  http://www.xn--h1adcfjmfy1g.xn--p1ai
+  http://162.212.115.58:56353/Mozi.m
+  http://111.42.103.37:36346/Mozi.m
+  http://69.165.64.137:8090/yxhl
+
+=== Cluster 4 (n=340, 0.1% of malicious rows) ===
+subtype composition:
+subtype
+phishing     0.685
+malicious    0.291
+malware      0.024
+source composition:
+source
+phiusiil        0.438
+urldata         0.291
+phish_corpus    0.271
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  has_non_ascii: cluster=1.000  overall=0.001  (z=+34.91)
+  has_punycode_label: cluster=1.000  overall=0.001  (z=+34.91)
+  has_mixed_script: cluster=0.074  overall=0.000  (z=+9.46)
+example URLs:
+  http://xn----7sbnelamcgre0r.xn--p1ai/bitrix/admin/dster/index.html
+  https://xn--80ah1b1b.xn--p1acf/bitrix/admin/znxn/index.html
+  https://www.xn--fhrerscheinmpuhaben-59b.com/chasonline-smap-092/JPMorganChaseOnline01
+
+=== Cluster 5 (n=10706, 2.6% of malicious rows) ===
+subtype composition:
+subtype
+malware       0.660
+malicious     0.276
+phishing      0.063
+defacement    0.001
+source composition:
+source
+phish_corpus    0.695
+urldata         0.276
+phiusiil        0.029
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  has_ip_host: cluster=0.956  overall=0.040  (z=+4.67)
+  letter_ratio: cluster=0.405  overall=0.753  (z=-2.84)
+  digit_ratio: cluster=0.349  overall=0.071  (z=+2.56)
+example URLs:
+  http://194.165.16.146/index.php?action=command
+  http://114.115.214.106/instagram
+  http://64.184.235.251/topic11.png
+
+=== Cluster 6 (n=1108, 0.3% of malicious rows) ===
+subtype composition:
+subtype
+phishing     0.541
+malicious    0.459
+source composition:
+source
+urldata         0.459
+phiusiil        0.435
+phish_corpus    0.106
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  is_shortened: cluster=1.000  overall=0.003  (z=+19.32)
+  hostname_length: cluster=6.810  overall=19.922  (z=-1.35)
+  num_dots: cluster=1.054  overall=2.577  (z=-1.06)
+example URLs:
+  https://tinyurl.com/bpa6b6jp
+  http://ow.ly/US923034Gey
+  https://tinyurl.com/4z4sfrm3

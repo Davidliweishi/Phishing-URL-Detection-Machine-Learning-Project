@@ -115,7 +115,7 @@ def build_merged_dataset() -> pd.DataFrame:
         # string (html.unescape would also corrupt e.g. "&param=" into "¶m=").
         amp_count = df["url"].str.contains("&amp;", regex=False, na=False).sum()
         # Collapse any escaping ("&amp;", etc) to a single "&"
-        df["url"] = df["url"].str.replace(r"&(?:amp)+", "&", regex=True)
+        df["url"] = df["url"].str.replace(r"&(?:amp;)+", "&", regex=True)
         print(f"  {name}: {amp_count} URL(s) with '&amp;' decoded to '&'")
         df["normalised_url"] = df["url"].apply(_normalise_url)
         unparseable = df["normalised_url"].isna()

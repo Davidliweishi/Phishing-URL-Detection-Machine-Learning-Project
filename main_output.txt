@@ -1,0 +1,27 @@
+  phish_corpus: 10082 URL(s) with '&amp;' decoded to '&'
+  phiusiil: 1161 URL(s) with '&amp;' decoded to '&'
+  urldata: 5505 URL(s) with '&amp;' decoded to '&'
+  urldata: 1 unparseable URL(s) dropped, e.g. 'http://ladiesfirst-privileges[.]com/656465/d5678h9.exe'
+within-source dedup:
+  phish_corpus: 5966 within-source normalised-URL duplicates removed
+  phiusiil: 817 within-source normalised-URL duplicates removed
+  urldata: 493 within-source normalised-URL duplicates removed
+cross-source merge:
+  0 phiusiil/urldata label conflicts dropped (no malicious_phish row to arbitrate)
+  52 label conflicts resolved in favour of malicious_phish
+  2912 agreeing cross-source duplicates collapsed to one row
+
+saved 1315241 rows, 26 columns -> dataset/processed/url_features.csv
+
+source x label counts:
+label              0       1
+source                      
+phish_corpus  422092  212140
+phiusiil      134849   99649
+urldata       343675  102836
+
+overall label balance:
+label
+0    0.684754
+1    0.315246
+Name: proportion, dtype: float64
