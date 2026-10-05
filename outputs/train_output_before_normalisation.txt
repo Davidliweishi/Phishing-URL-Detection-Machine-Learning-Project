@@ -1,0 +1,265 @@
+loaded 1315241 rows, 22 features, 31.5% malicious
+
+########## Random split: 1052192 train / 263049 test ##########
+
+Logistic Regression trained in 1.4s
+
+--- Logistic Regression ---
+              precision    recall  f1-score   support
+
+           0      0.818     0.749     0.782    180124
+           1      0.539     0.637     0.584     82925
+
+    accuracy                          0.714    263049
+   macro avg      0.679     0.693     0.683    263049
+weighted avg      0.730     0.714     0.720    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[134974  45150]
+ [ 30068  52857]]
+
+Random Forest trained in 26.7s
+
+--- Random Forest ---
+              precision    recall  f1-score   support
+
+           0      0.965     0.950     0.958    180124
+           1      0.896     0.925     0.910     82925
+
+    accuracy                          0.942    263049
+   macro avg      0.930     0.938     0.934    263049
+weighted avg      0.943     0.942     0.943    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[171182   8942]
+ [  6216  76709]]
+
+XGBoost trained in 3.9s
+
+--- XGBoost ---
+              precision    recall  f1-score   support
+
+           0      0.946     0.931     0.939    180124
+           1      0.855     0.886     0.870     82925
+
+    accuracy                          0.917    263049
+   macro avg      0.901     0.908     0.904    263049
+weighted avg      0.918     0.917     0.917    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[167647  12477]
+ [  9482  73443]]
+
+LightGBM trained in 8.5s
+
+--- LightGBM ---
+              precision    recall  f1-score   support
+
+           0      0.958     0.939     0.949    180124
+           1      0.874     0.912     0.892     82925
+
+    accuracy                          0.931    263049
+   macro avg      0.916     0.926     0.921    263049
+weighted avg      0.932     0.931     0.931    263049
+
+confusion matrix (rows=true, cols=predicted):
+[[169215  10909]
+ [  7332  75593]]
+
+=== Random split summary ===
+                     accuracy  precision_mal  recall_mal  f1_mal  roc_auc  pr_auc  train_seconds
+model                                                                                           
+Logistic Regression     0.714          0.539       0.637   0.584    0.748   0.631          1.401
+Random Forest           0.942          0.896       0.925   0.910    0.982   0.968         26.728
+XGBoost                 0.917          0.855       0.886   0.870    0.969   0.946          3.862
+LightGBM                0.931          0.874       0.912   0.892    0.978   0.961          8.461
+
+########## Held out: phish_corpus (681009 train / 634232 test) ##########
+
+--- Logistic Regression | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.365     0.140     0.202    422092
+           1      0.232     0.516     0.320    212140
+
+    accuracy                          0.266    634232
+   macro avg      0.298     0.328     0.261    634232
+weighted avg      0.320     0.266     0.241    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[ 58958 363134]
+ [102594 109546]]
+
+--- Random Forest | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.087     0.021     0.034    422092
+           1      0.223     0.558     0.318    212140
+
+    accuracy                          0.201    634232
+   macro avg      0.155     0.289     0.176    634232
+weighted avg      0.132     0.201     0.129    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[  8916 413176]
+ [ 93820 118320]]
+
+--- XGBoost | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.137     0.035     0.056    422092
+           1      0.225     0.559     0.321    212140
+
+    accuracy                          0.210    634232
+   macro avg      0.181     0.297     0.189    634232
+weighted avg      0.167     0.210     0.145    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[ 14922 407170]
+ [ 93659 118481]]
+
+--- LightGBM | held out: phish_corpus ---
+              precision    recall  f1-score   support
+
+           0      0.101     0.024     0.039    422092
+           1      0.229     0.577     0.328    212140
+
+    accuracy                          0.209    634232
+   macro avg      0.165     0.301     0.183    634232
+weighted avg      0.144     0.209     0.135    634232
+
+confusion matrix (rows=true, cols=predicted):
+[[ 10083 412009]
+ [ 89640 122500]]
+
+########## Held out: phiusiil (1080743 train / 234498 test) ##########
+
+--- Logistic Regression | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.686     0.921     0.786    134849
+           1      0.801     0.430     0.559     99649
+
+    accuracy                          0.712    234498
+   macro avg      0.743     0.675     0.673    234498
+weighted avg      0.735     0.712     0.690    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[124204  10645]
+ [ 56844  42805]]
+
+--- Random Forest | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.873     0.734     0.797    134849
+           1      0.704     0.856     0.772     99649
+
+    accuracy                          0.786    234498
+   macro avg      0.788     0.795     0.785    234498
+weighted avg      0.801     0.786     0.787    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[98972 35877]
+ [14389 85260]]
+
+--- XGBoost | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.652     0.281     0.392    134849
+           1      0.450     0.797     0.575     99649
+
+    accuracy                          0.500    234498
+   macro avg      0.551     0.539     0.484    234498
+weighted avg      0.566     0.500     0.470    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[37843 97006]
+ [20225 79424]]
+
+--- LightGBM | held out: phiusiil ---
+              precision    recall  f1-score   support
+
+           0      0.804     0.508     0.623    134849
+           1      0.556     0.832     0.667     99649
+
+    accuracy                          0.646    234498
+   macro avg      0.680     0.670     0.645    234498
+weighted avg      0.699     0.646     0.641    234498
+
+confusion matrix (rows=true, cols=predicted):
+[[68541 66308]
+ [16701 82948]]
+
+########## Held out: urldata (868730 train / 446511 test) ##########
+
+--- Logistic Regression | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.665     0.142     0.235    343675
+           1      0.210     0.760     0.328    102836
+
+    accuracy                          0.285    446511
+   macro avg      0.437     0.451     0.282    446511
+weighted avg      0.560     0.285     0.256    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[ 48938 294737]
+ [ 24707  78129]]
+
+--- Random Forest | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.313     0.011     0.022    343675
+           1      0.217     0.916     0.351    102836
+
+    accuracy                          0.220    446511
+   macro avg      0.265     0.464     0.187    446511
+weighted avg      0.291     0.220     0.098    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[  3951 339724]
+ [  8672  94164]]
+
+--- XGBoost | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.412     0.014     0.027    343675
+           1      0.221     0.933     0.357    102836
+
+    accuracy                          0.226    446511
+   macro avg      0.316     0.474     0.192    446511
+weighted avg      0.368     0.226     0.103    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[  4830 338845]
+ [  6890  95946]]
+
+--- LightGBM | held out: urldata ---
+              precision    recall  f1-score   support
+
+           0      0.455     0.018     0.035    343675
+           1      0.220     0.927     0.356    102836
+
+    accuracy                          0.228    446511
+   macro avg      0.338     0.473     0.196    446511
+weighted avg      0.401     0.228     0.109    446511
+
+confusion matrix (rows=true, cols=predicted):
+[[  6271 337404]
+ [  7498  95338]]
+
+=== Held-out-source summary ===
+                                  accuracy  precision_mal  recall_mal  f1_mal  roc_auc  pr_auc
+held_out     model                                                                            
+phish_corpus Logistic Regression     0.266          0.232       0.516   0.320    0.341   0.293
+             Random Forest           0.201          0.223       0.558   0.318    0.306   0.277
+             XGBoost                 0.210          0.225       0.559   0.321    0.337   0.285
+             LightGBM                0.209          0.229       0.577   0.328    0.293   0.250
+phiusiil     Logistic Regression     0.712          0.801       0.430   0.559    0.706   0.729
+             Random Forest           0.786          0.704       0.856   0.772    0.862   0.835
+             XGBoost                 0.500          0.450       0.797   0.575    0.677   0.746
+             LightGBM                0.646          0.556       0.832   0.667    0.790   0.803
+urldata      Logistic Regression     0.285          0.210       0.760   0.328    0.470   0.318
+             Random Forest           0.220          0.217       0.916   0.351    0.410   0.226
+             XGBoost                 0.226          0.221       0.933   0.357    0.401   0.246
+             LightGBM                0.228          0.220       0.927   0.356    0.428   0.275

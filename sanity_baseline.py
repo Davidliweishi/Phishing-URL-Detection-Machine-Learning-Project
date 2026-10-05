@@ -94,9 +94,9 @@ def run_held_out_source_split(df: pd.DataFrame, feature_cols: list[str]) -> None
 
         # Error analysis: pull a few actual misclassified URLs for hand
         # inspection, alongside the features most likely to explain the
-        # mistake (has_https etc. were the top source-fingerprint features
+        # mistake (has_https etc. were the top source-fingerprint features and has now been removed
         # from run_source_leakage_check).
-        inspect_cols = ["has_https", "url_length", "num_hyphens"]
+        inspect_cols = [ "url_length", "num_hyphens"]
         results = test_df.copy()
         results["pred"] = preds
         false_positives = results[(results["label"] == 0) & (results["pred"] == 1)]

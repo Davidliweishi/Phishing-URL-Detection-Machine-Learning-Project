@@ -4,8 +4,8 @@ import pandas as pd
 
 from lexical_features import extract_lexical_features
 
-model = joblib.load("models/phishing_model.pkl")
-feature_cols = joblib.load("models/feature_columns.pkl")
+model = joblib.load("models/final_model.joblib")
+feature_cols = joblib.load("models/feature_columns.joblib")
 
 
 def predict_url(url: str) -> dict:

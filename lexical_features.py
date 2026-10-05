@@ -40,8 +40,13 @@ def _has_mixed_script(s: str) -> bool:
     return has_latin and has_confusable
 
 # Function and features setup
+
 def extract_lexical_features(df: pd.DataFrame, url_col: str = "url") -> pd.DataFrame:
-    urls = df[url_col].fillna("")
+    # Strip the scheme ("http://", "https://") and a leading "www." before
+    # computing any feature. 
+    urls = (df[url_col].fillna("")
+            .str.replace(r"^[A-Za-z][A-Za-z0-9+.-]*://", "", regex=True)
+            .str.replace(r"^www\.", "", case=False, regex=True))
     domain_parts = extract_domain_features(urls)
 
     feats = pd.DataFrame(index=df.index)
@@ -59,7 +64,6 @@ def extract_lexical_features(df: pd.DataFrame, url_col: str = "url") -> pd.DataF
     feats["num_at_symbols"] = urls.str.count("@")
     feats["num_special_chars"] = urls.apply(lambda u: sum(ch in _SPECIAL_CHARS for ch in u))
     feats["num_query_params"] = domain_parts["query"].apply(lambda q: q.count("&") + 1 if q else 0)
-    feats["has_https"] = (domain_parts["scheme"] == "https").astype(int)
     feats["has_explicit_port"] = domain_parts["explicit_port"].notna().astype(int)
     feats["is_shortened"] = domain_parts["domain"].isin(_SHORTNERS).astype(int)
 

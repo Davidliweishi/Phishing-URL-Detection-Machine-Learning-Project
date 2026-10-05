@@ -1,0 +1,114 @@
+clustering 414625 malicious rows on 22 features (label not used as input)
+
+silhouette scores by k:
+  k=2: silhouette=0.597
+  k=3: silhouette=0.359
+  k=4: silhouette=0.344
+  k=5: silhouette=0.357
+  k=6: silhouette=0.348
+  k=7: silhouette=0.210
+  k=8: silhouette=0.208
+  -> chose k=2 (highest silhouette score)
+  -> overriding to k=5 (set on the command line)
+
+=== Cluster 0 (n=298231, 71.9% of malicious rows) ===
+subtype composition:
+subtype
+phishing      0.536
+malicious     0.268
+defacement    0.163
+malware       0.032
+source composition:
+source
+phish_corpus    0.472
+urldata         0.268
+phiusiil        0.260
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  num_special_chars: cluster=4.509  overall=6.935  (z=-0.36)
+  num_query_params: cluster=0.109  overall=0.712  (z=-0.35)
+  url_length: cluster=35.947  overall=52.224  (z=-0.31)
+example URLs:
+  http://www.franekwilkomirski.pl/media/3-beat-dla-serca-ratujemy-franka.html
+  www.galeforcecreations.com/saitta/index.html
+  https://mitsui-jyuku.mixh.jp/uploads/61113687ead846bae3d6dc2187ebf1d00be.exe
+
+=== Cluster 1 (n=73703, 17.8% of malicious rows) ===
+subtype composition:
+subtype
+defacement    0.627
+malicious     0.211
+phishing      0.136
+malware       0.026
+source composition:
+source
+phish_corpus    0.739
+urldata         0.211
+phiusiil        0.050
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  num_query_params: cluster=3.515  overall=0.712  (z=+1.62)
+  num_special_chars: cluster=16.817  overall=6.935  (z=+1.45)
+  url_length: cluster=120.560  overall=52.224  (z=+1.29)
+example URLs:
+  http://the100prosystems.com/wp-admin/css/colors/sunrise/Update/signin/myaccount/identity/?cmd=_session=&b067d6f31d5110f5aad7f344b6141013&dispatch=c4d4228a10c4b68b0bd81b1728c17b74783c1e75
+  http://santabarbaraheart.com/9f88eeb0da6a508ba0a2d1382e5a5b02/indexx.php?0hrcode-myonportal=6&cmdONLINE=BMO-codee9012a8e024d27db82b80a23ebfb4fac
+  http://www.cresco.com.hk/corporate/testimonials/18-testimonials-corp-assessment/92-manager-marketing-aecom-asia-company-ltd-singapore
+
+=== Cluster 2 (n=16284, 3.9% of malicious rows) ===
+subtype composition:
+subtype
+malware      0.723
+malicious    0.247
+phishing     0.031
+source composition:
+source
+phish_corpus    0.741
+urldata         0.247
+phiusiil        0.012
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  has_ip_host: cluster=0.988  overall=0.040  (z=+4.83)
+  letter_ratio: cluster=0.285  overall=0.780  (z=-3.33)
+  digit_ratio: cluster=0.503  overall=0.084  (z=+3.14)
+example URLs:
+  http://123.10.166.238:56297/Mozi.m
+  http://93.175.140.1/q6cvuvu
+  http://208.113.133.35/mips
+
+=== Cluster 3 (n=26067, 6.3% of malicious rows) ===
+subtype composition:
+subtype
+phishing     0.872
+malicious    0.119
+malware      0.009
+source composition:
+source
+phiusiil        0.695
+phish_corpus    0.186
+urldata         0.119
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  subdomain_hyphen_count: cluster=1.731  overall=0.144  (z=+2.63)
+  hostname_length: cluster=43.053  overall=18.402  (z=+2.49)
+  subdomain_depth: cluster=2.164  overall=0.394  (z=+2.21)
+example URLs:
+  http://h62-213-20-50.ip.syzran.ru/modules/mod_footer/enquiryfeeds67.php?.rand=13InboxLight.aspx?n=1774256418
+  https://cliente-online-lt.66-29-139-175.cprapid.com/home/index.php?sessione=4547bdc30620d520036ae96acef07e661b4ed91c9d30164cdeb61a4caaff2d044a3fd599
+  https://wearableclientsidedatamining--wasxsa.repl.co/
+
+=== Cluster 4 (n=340, 0.1% of malicious rows) ===
+subtype composition:
+subtype
+phishing     0.685
+malicious    0.291
+malware      0.024
+source composition:
+source
+phiusiil        0.438
+urldata         0.291
+phish_corpus    0.271
+top differentiating features (cluster mean vs overall malicious-subset mean):
+  has_punycode_label: cluster=1.000  overall=0.001  (z=+34.91)
+  has_non_ascii: cluster=1.000  overall=0.001  (z=+34.91)
+  has_mixed_script: cluster=0.041  overall=0.000  (z=+7.08)
+example URLs:
+  http://xn----7sbnelamcgre0r.xn--p1ai/bitrix/admin/dster/index.html
+  https://xn--80ah1b1b.xn--p1acf/bitrix/admin/znxn/index.html
+  https://www.xn--fhrerscheinmpuhaben-59b.com/chasonline-smap-092/JPMorganChaseOnline01
