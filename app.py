@@ -4,10 +4,19 @@ import pandas as pd
 
 from lexical_features import extract_lexical_features
 
-model = joblib.load("models/final_model.joblib")
-feature_cols = joblib.load("models/feature_columns.joblib")
+# Load the model once and reuse it across interactions.
+#Streamlint otherwise will use the whole script on every click.
+@st.cache_resource
+def load_model():
+    return(joblib.load("models/final_model.joblib"),
+           joblib.load("models/feature_columns.joblib"))
 
+model, feature_cols = load_model()
 
+# Score one URL with the saved model. Features come from the same
+# extract_lexical_features() used to build the training data, so a URL is
+# processed identically at training and prediction time. The trust score is
+# the benign probability scaled to 0-10.
 def predict_url(url: str) -> dict:
     features = extract_lexical_features(pd.DataFrame({"url": [url]}), url_col="url")
     X_new = features[feature_cols]
@@ -28,7 +37,7 @@ st.set_page_config(page_title="Phishing URL Detector", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #00C9FF;'>Phishing URL Detector</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #A0AAB5;'>Paste a URL below to check if it is a phishing attempt.</p>", unsafe_allow_html=True)
 
-url_input = st.text_input("Enter a URL:", placeholder="http://example.com")
+url_input = st.text_input("Enter a URL:", placeholder="http://example.com").strip()
 
 if st.button("Analyze URL", use_container_width=True):
     if url_input:
