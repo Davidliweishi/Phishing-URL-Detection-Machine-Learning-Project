@@ -1,0 +1,7 @@
+name: phishing
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - llvm-openmp
+prefix: /Users/cashies/miniconda3/envs/phishing
