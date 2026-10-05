@@ -1,5 +1,6 @@
 
 import pandas as pd
+import sys
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
@@ -31,6 +32,9 @@ def describe_clusters(df: pd.DataFrame, feature_cols: list[str]) -> None:
         print("subtype composition:")
         print(sub["subtype"].value_counts(normalize=True).round(3).to_string())
 
+        print("source composition:")
+        print(sub["source"].value_counts(normalize=True).round(3).to_string())
+
         z = (sub[feature_cols].mean() - overall_mean) / overall_std
         top = z.abs().sort_values(ascending=False).head(3)
         print("top differentiating features (cluster mean vs overall malicious-subset mean):")
@@ -54,6 +58,10 @@ def main():
 
     print("\nsilhouette scores by k:")
     k = pick_k(X_scaled)
+    
+    if len(sys.argv) > 1:
+        k = int(sys.argv[1])
+        print(f"  -> overriding to k={k} (set on the command line)")
 
     model = KMeans(n_clusters=k, n_init=10, random_state=42)
     malicious["cluster"] = model.fit_predict(X_scaled)
