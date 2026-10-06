@@ -31,7 +31,7 @@ def _decode_hostname_labels(hostname: str) -> str:
             decoded_labels.append(label)
     return ".".join(decoded_labels)
 
-# Checks if the URL mixes normal Latin letters with Greek ones (a feature of URL Phishing)"""
+# Checks if the URL mixes normal Latin letters with Greek ones (a feature of URL Phishing)
 def _has_mixed_script(s: str) -> bool:
     has_latin = any(ch.isascii() and ch.isalpha() for ch in s)
     has_confusable = any(
@@ -71,7 +71,7 @@ def extract_lexical_features(df: pd.DataFrame, url_col: str = "url") -> pd.DataF
     hostname = domain_parts["hostname"]
     feats["has_ip_host"] = domain_parts["is_ip_host"].astype(int)
     # has_numeric_host, has_hex_host, has_ipv6_host, ip_octet_out_of_range were
-    # cut - 0 or near-0 variance across all 1.3M rows (see README)
+    # cut - 0 or near-0 variance across all 1.3M rows 
 
 # Subdomain features
     subdomain = domain_parts["subdomain"]

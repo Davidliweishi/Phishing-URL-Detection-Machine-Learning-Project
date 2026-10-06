@@ -5,8 +5,7 @@
 
 ## 2. Source leakage check - can the same features predict which raw dataset a
 ##   URL came from? If so, the label model could partly be learning "which
-##   dataset does this look like" instead of "is this phishing" - see README
-##   for how that's handled (a held-out-source split, not feature removal).
+##   dataset does this look like" instead of "is this phishing".
 
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
