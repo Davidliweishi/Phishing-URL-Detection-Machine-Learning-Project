@@ -1,30 +1,10 @@
 ## Dataset Instructions and Explanation
 
-## Dataset Citation Sources: 
-
-Sid321axn (2021) Malicious URLs dataset [Dataset]. Kaggle. Available at:
-https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset
-(Accessed: 25 September 2026).
-
-Siddharthkumar25 (2019) Malicious and benign URLs [Dataset]. Kaggle. Available at:
-https://www.kaggle.com/datasets/siddharthkumar25/malicious-and-benign-urls
-(Accessed: 25 September 2026).
-
-Prasad, A. and Chandra, S. (2024) PhiUSIIL phishing URL (website) [Dataset].
-UCI Machine Learning Repository. Available at: https://doi.org/10.1016/j.cose.2023.103545
-(Accessed: 25 September 2026).
-
-Mohammad, R.M. and McCluskey, L. (2015) Phishing Websites Dataset [Dataset].
-UCI Machine Learning Repository. Available at: https://archive.ics.uci.edu/dataset/327
-(Accessed: 25 September 2026). Used as a feature-design reference only (see Feature
-Justification) - it ships pre-computed feature values with no raw URL column, so it is
-not merged into `url_features.csv` and is not included in `dataset/raw/`.
-
 *************
 
 ## Feature Justification 
 
-- `url_length`, `hostname_length`, `num_dots` - malicious URLs differ structurally in length and host/subdomain structure (Ma et al. 2009)
+- `url_length`, `hostname_length`, `num_dots` - malicious URLs are different in length and host/subdomain structure (Ma et al. 2009)
 - `has_ip_host` - a raw IP as the hostname is atypical of legitimate sites (Ma et al. 2009)
 
 - `num_slashes`, `num_hyphens`, `num_underscores`, `num_query_params` - frequency of the delimiter characters Ma et al. (2009) use to tokenise URLs
@@ -39,7 +19,7 @@ not merged into `url_features.csv` and is not included in `dataset/raw/`.
 
 - `subdomain_depth` - deep subdomain nesting is used to bury a fake brand name behind something familiar-looking.
 
-- `has_explicit_port` - legitimate sites rarely expose a non-standard port. Also validated against the UCI Phishing Websites Dataset's `Shortining_Service`, `having_At_Symbol`, `having_Sub_Domain`, `port` (Mohammad & McCluskey 2015)
+- `has_explicit_port` - legitimate sites rarely expose a non-standard port. Also validated against the UCI Phishing Websites Dataset's `Shortining_Service`, `having_At_Symbol`, `having_Sub_Domain`, `port` (Mohammad & McCluskey 2012)
 
 - `letter_ratio`/`num_digits`/`digit_ratio` - auto-generated malicious URLs skew toward more digits and fewer letters
 
@@ -51,19 +31,45 @@ URLs include a scheme), not whether the URL is malicious. The scheme (`http://`,
 leading `www.` are now stripped before any feature is computed, so no feature depends on them.
 
 
+**Excluded:** host-based features (WHOIS dates/registrant, DNS TTL, IP blacklist, AS/prefix, geographic IP) - Ma et al. (2009) and Mohammad & McCluskey (2012) both define these; live-page-content features (favicon, forms, popups, redirects, page title/text matching) - Mohammad & McCluskey (2012) and PhiUSIIL's own raw columns (Prasad & Chandra 2024) both include these. All excluded here because each needs a live network lookup or page fetch, and this app must run offline.
 
-**Excluded:** host-based features (WHOIS dates/registrant, DNS TTL, IP blacklist, AS/prefix, geographic IP) - Ma et al. (2009) and Mohammad & McCluskey (2015) both define these; live-page-content features (favicon, forms, popups, redirects, page title/text matching) - Mohammad & McCluskey (2015) and PhiUSIIL's own raw columns (Prasad & Chandra 2024) both include these. All excluded here because each needs a live network lookup or page fetch, and this app must run offline.
 
+## References
 
+### Datasets
+
+Mohammad, R. and McCluskey, L. (2012) *Phishing Websites* [Dataset]. UCI Machine Learning
+Repository. Available at: https://doi.org/10.24432/C51W2X (Accessed: 25 September 2026).
+Used as a feature-design reference only (see Feature Justification) - it ships pre-computed
+feature values with no raw URL column, so it is not merged into `url_features.csv` and is
+not included in `dataset/raw/`.
+
+Prasad, A. and Chandra, S. (2024) *PhiUSIIL Phishing URL (Website)* [Dataset]. UCI Machine
+Learning Repository. Available at: https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset
+Raw file: `dataset/raw/PhiUSIIL_Phishing_URL_Dataset.csv`.
+
+Sid321axn (2021) *Malicious URLs dataset* [Dataset]. Kaggle. Available at:
+https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset
+Raw file: `dataset/raw/malicious_phish.csv`.
+
+Siddharthkumar25 (2019) *Malicious and benign URLs* [Dataset]. Kaggle. Available at:
+https://www.kaggle.com/datasets/siddharthkumar25/malicious-and-benign-urls 
+Raw file: `dataset/raw/urldata.csv`.
+
+### Literature
 
 Ma, J., Saul, L.K., Savage, S. and Voelker, G.M. (2009) 'Beyond blacklists: learning to
-detect malicious web sites from suspicious URLs', in Proceedings of the 15th ACM SIGKDD
-International Conference on Knowledge Discovery and Data Mining (KDD '09), pp. 1245-1254.
+detect malicious web sites from suspicious URLs', *Proceedings of the 15th ACM SIGKDD
+International Conference on Knowledge Discovery and Data Mining (KDD '09)*, pp. 1245-1254.
 doi: 10.1145/1557019.1557153.
 
-Yazdani, K., van der Toorn, R. and Sperotto, A. (2020) 'A case of identity: detection of
-suspicious IDN homograph domains using active DNS measurements', in 2020 IEEE European
-Symposium on Security and Privacy Workshops (EuroS&PW), pp. 559-564.
+Prasad, A. and Chandra, S. (2024) 'PhiUSIIL: a diverse security profile empowered phishing
+URL detection framework based on similarity index and incremental learning', *Computers &
+Security*, 136, 103545. doi: 10.1016/j.cose.2023.103545.
+
+Yazdani, R., van der Toorn, O. and Sperotto, A. (2020) 'A case of identity: detection of
+suspicious IDN homograph domains using active DNS measurements', *2020 IEEE European
+Symposium on Security and Privacy Workshops (EuroS&PW)*, pp. 559-564.
 doi: 10.1109/EuroSPW51379.2020.00082.
 
 *******
@@ -84,19 +90,20 @@ Run every command from the repo root (scripts use relative paths).
 
 ### Pipeline
 
-1. Run `Assignment_2.ipynb` top to bottom → cleans `dataset/raw/` into `dataset/clean/`
-2. Run `python3 main.py` → merges + dedupes the 3 cleaned sources into `dataset/processed/url_features.csv`
-3. Run `python3 sanity_baseline.py` → prints sanity-check results to the console
-4. Run `python3 train.py` → compares models, prints error analysis, saves `models/final_model.joblib` + `models/feature_columns.joblib`
-5. Run `python3 cluster_analysis.py [k]` → KMeans on the malicious class; with no `k` it picks k by silhouette score (final run used `python3 cluster_analysis.py 7`)
-6. Run `streamlit run app.py` → opens the URL checker in the browser (needs step 4's model files)
+1. Run `Assignment_2.ipynb` top to bottom -> cleans `dataset/raw/` into `dataset/clean/`
+2. Run `python3 main.py` -> merges + dedupes the 3 cleaned sources into `dataset/processed/url_features.csv`
+3. Run `python3 data_analysis.py` -> saves four PNG exploratory charts to `outputs/figures/`
+4. Run `python3 sanity_baseline.py` -> prints sanity-check results to the console
+5. Run `python3 train.py` -> compares models, prints error analysis, saves `models/final_model.joblib` + `models/feature_columns.joblib`
+6. Run `python3 cluster_analysis.py [k]` -> KMeans on the malicious class; with no `k` it picks k by silhouette score (final run used `python3 cluster_analysis.py 7`)
+7. Run `streamlit run app.py` -> opens the URL checker in the browser (needs step 4's model files)
 
 Tests: `python3 -m unittest test_extract_domains -v`
 
 `dataset/raw/` = original files, `dataset/clean/` = per-source cleaned files,
 `dataset/processed/` = merged feature table, `models/` = trained model,
 `outputs/` = saved console output from each run (`main_output.txt`, `train_output.txt`,
-`cluster_output_k7.txt`, `sanity_output_after.txt`, `train_output_before_normalisation.txt`)
+`cluster_output_k5.txt`, `sanity_output_after.txt`, `train_output_before_normalisation.txt`)
 
 ***** 
 
@@ -109,10 +116,17 @@ Tests: `python3 -m unittest test_extract_domains -v`
 - `lexical_features.py` - computes the 22 features in `url_features.csv` from those parsed pieces
 
 - `main.py` - loads the 3 cleaned sources, unifies their schema, dedupes within/across sources, runs feature extraction, saves `dataset/processed/url_features.csv`
+
+- `data_analysis.py` - loads 4 PNG exploratory charts, analyses different trends between the datasets. 
+
 - `sanity_baseline.py` - trains a baseline classifier and runs 3 diagnostics: label prediction, source-leakage check, held-out-source split
+
 - `cluster_analysis.py` - unsupervised KMeans clustering within the malicious class only, to find structure not already in the label
+
 - `train.py` - trains and compares Logistic Regression, Random Forest, XGBoost and LightGBM, runs error analysis, saves the final model to `models/`
+
 - `app.py` - Streamlit web app: enter a URL, get a phishing probability, trust score and verdict from the saved model
+
 - `test_extract_domains.py` - unit tests for `extract_domains.py`'s awkward cases (IPv6, malformed ports, multi-label suffixes, etc.)
 
 *************
