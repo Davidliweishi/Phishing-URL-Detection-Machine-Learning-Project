@@ -23,7 +23,7 @@ Run every command from the repo root (scripts use relative paths).
 2. `python main.py` -> merges and dedupes the 3 cleaned sources, extracts features, saves `dataset/processed/url_features.csv`
 3. *(Optional)* `python data_analysis.py` -> saves four exploratory charts to `outputs/figures/`
 4. *(Optional)* `python sanity_baseline.py` -> prints label, source-leakage and held-out-source checks
-5. *(Optional)* `python cluster_analysis.py [k]` -> KMeans on the malicious class; with no `k` it picks k by silhouette score (final run used `k=7`)
+5. *(Optional)* `python cluster_analysis.py [k]` -> KMeans on the malicious class; with no `k` it picks k by silhouette score (final run used `k=5`)
 
 ## Training
 

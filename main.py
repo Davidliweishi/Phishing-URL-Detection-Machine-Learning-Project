@@ -77,7 +77,7 @@ def _dedupe_within_source(name: str, df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _resolve_cross_source(df: pd.DataFrame) -> pd.DataFrame:
-    """Collapse to one row per normalised URL across all sources."""
+    #Collapse to one row per normalised URL across all sources.
     df = df.copy()
     df["_priority"] = df["source"].map(SOURCE_PRIORITY)
 

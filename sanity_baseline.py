@@ -4,8 +4,7 @@
 ## 1. Label baseline - can the lexical features predict phishing at all?
 
 ## 2. Source leakage check - can the same features predict which raw dataset a
-##   URL came from? If so, the label model could partly be learning "which
-##   dataset does this look like" instead of "is this phishing".
+##   URL came from? 
 
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
@@ -53,8 +52,6 @@ def run_source_leakage_check(df: pd.DataFrame, feature_cols: list[str]) -> None:
     model.fit(X_train, y_train)
     preds = model.predict(X_test)
 
-    # Sources aren't balanced, so raw accuracy is meaningless on its own -
-    # compare against always guessing the biggest class in the test split.
     baseline = y_test.value_counts(normalize=True).max()
     accuracy = (preds == y_test.to_numpy()).mean()
     print(f"majority-class baseline accuracy: {baseline:.3f}")
@@ -92,9 +89,7 @@ def run_held_out_source_split(df: pd.DataFrame, feature_cols: list[str]) -> None
         print(classification_report(test_df["label"], preds))
 
         # Error analysis: pull a few actual misclassified URLs for hand
-        # inspection, alongside the features most likely to explain the
-        # mistake (has_https etc. were the top source-fingerprint features and has now been removed
-        # from run_source_leakage_check).
+        # inspection
         inspect_cols = [ "url_length", "num_hyphens"]
         results = test_df.copy()
         results["pred"] = preds

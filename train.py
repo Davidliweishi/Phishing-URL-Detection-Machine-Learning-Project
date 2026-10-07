@@ -113,9 +113,7 @@ def random_split_experiment(df: pd.DataFrame, feature_cols: list[str]):
     return results, models, X_test, y_test
 
 # Harder evaluation: for each source in turn, train on the other two sources
-# only and test on the one the models never saw. A large drop from the
-# random-split scores means a model relied on dataset-specific patterns
-# rather than signals that transfer to URLs collected a different way.
+# only and test on the one the models never saw.
 def held_out_source_experiment(df: pd.DataFrame, feature_cols: list[str]) -> pd.DataFrame:
     rows = []
     for held_out in sorted(df["source"].unique()):
