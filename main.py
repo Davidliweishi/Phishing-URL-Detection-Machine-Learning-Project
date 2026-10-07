@@ -1,32 +1,44 @@
-## Build the merged, deduplicated URL feature dataset from all three cleaned sources.
+# Combine the three cleaned datasets into one feature table.
+#
+# Steps:
+# 1. Load each dataset and give them all the same 4 columns
+# (url, label, subtype, source)
+# 2. Fix "&amp;" in URLs and remove URLs that can't be read
+# 3. Remove duplicate URLs (inside each dataset, then between datasets)
+# 4. Work out the features for every URL and save the table
+#
+# Run with:  python main.py
 
 from urllib.parse import urlsplit, urlunsplit
 
 import pandas as pd
 
+from config import FEATURES_PATH
 from lexical_features import extract_lexical_features
 
 CLEAN_DIR = "dataset/clean"
-PROCESSED_DIR = "dataset/processed"
 
 PHISH_PATH = f"{CLEAN_DIR}/malicious_phish_cleaned.csv"
 PHIUSIIL_PATH = f"{CLEAN_DIR}/phiusiil_phishing_url_dataset_cleaned.csv"
 URLDATA_PATH = f"{CLEAN_DIR}/urldata_cleaned.csv"
-FEATURES_PATH = f"{PROCESSED_DIR}/url_features.csv"
 
+# These types in malicious_phish.csv count as malicious
 MALICIOUS_TYPES = {"phishing", "defacement", "malware"}
 
-# malicious_phish.csv is treated as the trusted source
+# If a URL is in more than one dataset, keep the copy from the lowest number.
+# We trust malicious_phish.csv the most.
 SOURCE_PRIORITY = {"phish_corpus": 0, "phiusiil": 1, "urldata": 2}
 
 
 def _normalise_url(url: str) -> str | None:
-    
-## Returns None for URLs urlsplit can't parse at all (e.g. defanged
-## indicators like "example[.]com" that slipped past the garbled-URL
-## regex because brackets are printable ASCII) - callers drop these.
-
-    url = url if "://" in url else f"http://{url}"
+    # Write the URL in a standard way, so duplicates are easy to find.
+    #
+    # "HTTP://Example.com/" and "example.com" both become "http://example.com".
+    #
+    # Gives None if the URL can't be read at all (e.g. "example[.]com").
+    # Those URLs are removed later.
+    if "://" not in url:
+        url = f"http://{url}"
     try:
         scheme, netloc, path, query, _fragment = urlsplit(url)
     except ValueError:
@@ -36,19 +48,22 @@ def _normalise_url(url: str) -> str | None:
     return urlunsplit((scheme.lower(), netloc.lower(), path, query, ""))
 
 
-# Per-source loaders - each maps a differently-shaped cleaned CSV onto the
-# same url/label/subtype/source schema
+# Loaders: each dataset names its columns differently,
+# so each one is changed to url / label / subtype / source
+
 def load_phish_corpus() -> pd.DataFrame:
+    # Load malicious_phish. Its "type" column says benign/phishing/defacement/malware.
     df = pd.read_csv(PHISH_PATH)
     return pd.DataFrame({
         "url": df["url"],
-        "label": df["type"].isin(MALICIOUS_TYPES).astype(int),
+        "label": df["type"].isin(MALICIOUS_TYPES).astype(int),  # True/False becomes 1/0
         "subtype": df["type"],
         "source": "phish_corpus",
     })
 
 
 def load_phiusiil() -> pd.DataFrame:
+    # Load PhiUSIIL. Its "label" column is already 1 (phishing) or 0 (safe).
     df = pd.read_csv(PHIUSIIL_PATH)
     return pd.DataFrame({
         "url": df["URL"],
@@ -59,33 +74,45 @@ def load_phiusiil() -> pd.DataFrame:
 
 
 def load_urldata() -> pd.DataFrame:
+    # Load urldata. Its "label" column says "malicious" or "benign".
     df = pd.read_csv(URLDATA_PATH)
     return pd.DataFrame({
         "url": df["url"],
-        "label": (df["label"] == "malicious").astype(int),
+        "label": (df["label"] == "malicious").astype(int),  # True/False becomes 1/0
         "subtype": df["label"],
         "source": "urldata",
     })
 
 
-# Dedup helpers - normalised-URL matching, first within each source then across all three
+# Removing duplicates
+
 def _dedupe_within_source(name: str, df: pd.DataFrame) -> pd.DataFrame:
-    before = len(df)
+    # Remove repeated URLs inside one dataset. Keep the first one.
+    rows_before = len(df)
     df = df.drop_duplicates(subset="normalised_url", keep="first")
-    print(f"  {name}: {before - len(df)} within-source normalised-URL duplicates removed")
+    print(f"  {name}: {rows_before - len(df)} within-source normalised-URL duplicates removed")
     return df
 
 
 def _resolve_cross_source(df: pd.DataFrame) -> pd.DataFrame:
-    #Collapse to one row per normalised URL across all sources.
+    # Keep one row per URL across all three datasets.
+    #
+    # If the datasets disagree about a URL's label:
+    #   - trust malicious_phish if it has the URL
+    #   - otherwise we can't tell who is right, so remove the URL
+    # If they agree, keep the copy from the most trusted dataset.
     df = df.copy()
     df["_priority"] = df["source"].map(SOURCE_PRIORITY)
 
+    # Is this URL also in malicious_phish?
     phish_urls = set(df.loc[df["source"] == "phish_corpus", "normalised_url"])
     has_phish = df["normalised_url"].isin(phish_urls)
-    label_nunique = df.groupby("normalised_url")["label"].transform("nunique")
-    conflict = label_nunique > 1
 
+    # Conflict = the same URL has different labels in different datasets
+    labels_per_url = df.groupby("normalised_url")["label"].transform("nunique")
+    conflict = labels_per_url > 1
+
+    # "~" means "not": a conflict that malicious_phish can't settle
     unresolvable = conflict & ~has_phish
     print(f"  {df.loc[unresolvable, 'normalised_url'].nunique()} phiusiil/urldata label "
           f"conflicts dropped (no malicious_phish row to arbitrate)")
@@ -95,28 +122,30 @@ def _resolve_cross_source(df: pd.DataFrame) -> pd.DataFrame:
     print(f"  {df.loc[resolved_by_phish, 'normalised_url'].nunique()} label conflicts "
           f"resolved in favour of malicious_phish")
 
-    before = len(df)
+    # Put the most trusted dataset first, then keep only the first copy
+    rows_before = len(df)
     df = df.sort_values("_priority").drop_duplicates(subset="normalised_url", keep="first")
-    print(f"  {before - len(df)} agreeing cross-source duplicates collapsed to one row")
+    print(f"  {rows_before - len(df)} agreeing cross-source duplicates collapsed to one row")
 
     return df.drop(columns=["_priority"])
 
 
-# Orchestration - load all sources, dedup, then compute features
 def build_merged_dataset() -> pd.DataFrame:
+    # Load, clean and combine all three datasets, then add the features.
     sources = {
         "phish_corpus": load_phish_corpus(),
         "phiusiil": load_phiusiil(),
         "urldata": load_urldata(),
     }
+
     for name, df in sources.items():
-        # Some scraped URLs contain the HTML-escaped "&amp;" instead of "&",
-        # which inflates special-character counts. Replace only that exact
-        # string (html.unescape would also corrupt e.g. "&param=" into "¶m=").
+        # Some URLs say "&amp;" where they mean "&". This adds extra symbols,
+        # so swap it back. (html.unescape would also break things like "&param=".)
         amp_count = df["url"].str.contains("&amp;", regex=False, na=False).sum()
-        # Collapse any escaping ("&amp;", etc) to a single "&"
+        # "&amp;", "&amp;amp;" and so on all become "&"
         df["url"] = df["url"].str.replace(r"&(?:amp;)+", "&", regex=True)
         print(f"  {name}: {amp_count} URL(s) with '&amp;' decoded to '&'")
+
         df["normalised_url"] = df["url"].apply(_normalise_url)
         unparseable = df["normalised_url"].isna()
         if unparseable.any():
@@ -127,11 +156,13 @@ def build_merged_dataset() -> pd.DataFrame:
     print("within-source dedup:")
     sources = {name: _dedupe_within_source(name, df) for name, df in sources.items()}
 
+    # Stack the three datasets into one table
     combined = pd.concat(sources.values(), ignore_index=True)
     print("cross-source merge:")
     combined = _resolve_cross_source(combined)
     combined = combined.drop(columns=["normalised_url"]).reset_index(drop=True)
 
+    # Add the feature columns on the right
     features = extract_lexical_features(combined, url_col="url")
     return pd.concat([combined, features], axis=1)
 

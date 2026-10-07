@@ -1,26 +1,38 @@
-import streamlit as st
+# Web app: paste a URL and the saved model says if it looks like phishing.
+#
+# Run with:  streamlit run app.py
+# (Run train.py first so the model files exist in models/)
+
 import joblib
 import pandas as pd
+import streamlit as st
 
 from lexical_features import extract_lexical_features
 
-# Load the model once and reuse it across interactions.
-#Streamlint otherwise will use the whole script on every click.
+
+# Load the model only once. Without this, Streamlit
+# would reload it every time you click something.
 @st.cache_resource
 def load_model():
-    return(joblib.load("models/final_model.joblib"),
-           joblib.load("models/feature_columns.joblib"))
+    model = joblib.load("models/final_model.joblib")
+    feature_cols = joblib.load("models/feature_columns.joblib")
+    return model, feature_cols
+
 
 model, feature_cols = load_model()
 
-# Score one URL with the saved model. Features come from the same
-# extract_lexical_features() used to build the training data, so a URL is
-# processed identically at training and prediction time. The trust score is
-# the benign probability scaled to 0-10.
+
 def predict_url(url: str) -> dict:
+    # Check one URL with the saved model.
+    #
+    # It uses the same feature code as training, so the model sees the URL
+    # the same way it saw the training data.
+    # Trust score: 10 = surely safe, 0 = surely phishing.
     features = extract_lexical_features(pd.DataFrame({"url": [url]}), url_col="url")
+    # Put the columns in the same order as during training
     X_new = features[feature_cols]
 
+    # Chance that this URL is phishing (0 to 1)
     proba = model.predict_proba(X_new)[0, 1]
     trust_score = round((1 - proba) * 10, 2)
 
@@ -32,6 +44,7 @@ def predict_url(url: str) -> dict:
     }
 
 
+# Page layout
 st.set_page_config(page_title="Phishing URL Detector", layout="centered")
 
 st.markdown("<h1 style='text-align: center; color: #00C9FF;'>Phishing URL Detector</h1>", unsafe_allow_html=True)
@@ -47,9 +60,12 @@ if st.button("Analyze URL", use_container_width=True):
             st.error("PHISHING - This URL looks suspicious!")
         else:
             st.success("LEGITIMATE - This URL appears safe.")
+
+        # Show two numbers side by side
         col1, col2 = st.columns(2)
         col1.metric("Trust Score (0-10)", result["trust_score"])
         col2.metric("Phishing Probability", str(round(result["phishing_probability"] * 100, 2)) + "%")
+
         with st.expander("View Feature Breakdown"):
             st.json(result["features"])
     else:

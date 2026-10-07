@@ -41,4 +41,5 @@ Run every command from the repo root (scripts use relative paths).
 
 `dataset/raw/` = original files, `dataset/clean/` = per-source cleaned files,
 `dataset/processed/` = merged feature table, `models/` = trained model,
-`outputs/` = saved console output from each run
+`outputs/` = saved console output from each run.
+Shared settings (feature table path, non-feature columns, random seed) live in `config.py`.

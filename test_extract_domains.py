@@ -1,6 +1,6 @@
-## Tests for the awkward URL-parsing cases in extract_domains.py.
+## Tests for tricky URLs in extract_domains.py.
 
-## Run with command: python -m unittest test_extract_domains -v
+## Run with: python -m unittest test_extract_domains -v
 
 import unittest
 
@@ -42,7 +42,7 @@ class TestExtractDomainFeatures(unittest.TestCase):
         self.assertEqual(row["subdomain_depth"], 0)
 
     def test_multi_label_suffix_splits_correctly(self):
-        # "co.uk" is a two-label public suffix - the  domain
+        # "co.uk" is a two-part ending, so the domain
         # should be "example.co.uk", not just "co.uk"
         row = _row("https://www.example.co.uk/login")
         self.assertEqual(row["subdomain"], "www")
